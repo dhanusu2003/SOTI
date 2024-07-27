@@ -1,0 +1,25 @@
+class Solution {
+    static int mod=(int)Math.pow(10,9)+7;
+    public int maxSumRangeQuery(int[] nums, int[][] requests) {
+        int n=nums.length;
+        long sum=0;
+        int count[]=new int[n];
+        for(int re[]:requests){
+            int start=re[0];
+            int end=re[1]+1;
+            count[start]++;
+            if(end<n)
+            count[end]--;
+        }
+        for(int i=1;i<n;i++){
+            count[i]+=count[i-1];
+        }
+        Arrays.sort(count);
+        Arrays.sort(nums);
+        for(int i=0;i<n;i++){
+            long val=(long)count[i]*(long)nums[i];
+            sum=sum+val;
+        }
+        return (int)(sum%mod);
+    }
+}
